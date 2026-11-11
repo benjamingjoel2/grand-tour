@@ -60,19 +60,19 @@ sources:
     publisher: "Mont Saint-Michel Normandy Destination (tourist office)"
     url: "https://www.ot-montsaintmichel.com/en/discover/visit-the-mont-saint-michel/the-mont-saint-michel-differently/the-crossings-of-the-bay-guides/"
     retrieved: 2026-11-11
-  - title: "Tide times"
+  - title: "Tide schedules"
     publisher: "Mont Saint-Michel Normandy Destination (tourist office)"
     url: "https://www.ot-montsaintmichel.com/en/tide-schedules/"
     retrieved: 2026-11-11
   - title: "Abbaye du Mont-Saint-Michel"
-    publisher: "Centre des monuments nationaux"
+    publisher: "Abbaye du Mont-Saint-Michel (Les monuments nationaux)"
     url: "https://www.abbaye-mont-saint-michel.fr/en/"
     retrieved: 2026-11-11
 ---
 
 Early on a summer morning the beach below Colleville-sur-Mer is almost silent. The tide is out, the sand runs wide and ribbed towards a pale Channel, and the only sounds are oystercatchers and the wind in the marram grass. It takes a moment to connect this ordinary, lovely stretch of coast with what happened here. Then you climb to the bluff, see the long rows of white headstones above the beach, and the connection makes itself.
 
-Normandy asks two very different things of a visitor. The landing beaches ask for attention and a certain quietness. Mont-Saint-Michel, a couple of hours down the coast, asks for good timing and respect for one of the most powerful tidal bays in Europe. Done well, a week here combines both, and it is one of the most moving trips you can make in France.
+Normandy asks two very different things of a visitor. The landing beaches ask for attention and a certain quietness. Mont-Saint-Michel, further down the coast, asks for good timing and respect for a bay with some of the highest tides in continental Europe. Done well, a week here combines both, and it is one of the most moving trips you can make in France.
 
 ## Understanding the landing beaches
 
@@ -101,7 +101,7 @@ If you can, stay for the flag-lowering ceremony, which [the ABMC says](https://w
 
 ## Bayeux, its war cemetery and the tapestry
 
-Bayeux is the natural base for the beaches, and its Commonwealth war cemetery is listed by the [Bayeux Bessin tourist office](https://www.bayeux-bessin-tourisme.com/en/go-to-bessin/d-day-normandy) as one of the region's key sites. It is quieter than Colleville and, to our minds, every bit as affecting. The cream headstones carry personal inscriptions chosen by families, and reading a few of them slowly is one of the most humbling things you can do here. If you are looking for a particular grave, the Commonwealth War Graves Commission's online records are the place to start before you travel.
+Bayeux is the natural base for the beaches, and its Commonwealth war cemetery is listed by the [Bayeux Bessin tourist office](https://www.bayeux-bessin-tourisme.com/en/go-to-bessin/d-day-normandy) as one of the region's key sites. It is quieter than Colleville and, to our minds, every bit as affecting. Walking slowly along the rows of headstones and reading the names, ages and regiments is one of the most humbling things you can do here.
 
 One important change for 2026 and 2027: the [Bayeux Tapestry Museum](https://www.bayeuxmuseum.com/en/) is closed for renovation until autumn 2027. You can still explore the whole tapestry scene by scene on the museum's website, which is a fine way to prepare for a later trip. The town itself is still a pleasure: a cathedral that seems far too big for the streets around it, a little river turning old mill wheels, and good bakeries for a picnic before the beaches.
 
@@ -129,7 +129,7 @@ Many people prefer to walk at least one way. The [tourist office's walking and c
 
 Without a car, the [tourist office's train page](https://www.ot-montsaintmichel.com/en/discover/visit-the-mont-saint-michel/access-the-mont-saint-michel/by-train-plane-and-ferry/) says the nearest station is Pontorson, 9 km away, with a bus on to the Mont. There is also a direct bus from Rennes, which it times at 1 hour 10 minutes. Our guide to [getting around France by train and car](/posts/getting-around-france-trains-driving/) covers the wider connections.
 
-The abbey at the summit is managed by the Centre des monuments nationaux. Book a timed ticket on the [official abbey website](https://www.abbaye-mont-saint-michel.fr/en/), where you can also check opening hours and the current ticket price. Our advice is to arrive early or late: the single main street fills by mid-morning, while the ramparts at dusk feel like a different place.
+The abbey at the summit is one of France's national monuments. Buy your ticket in advance on the [official abbey website](https://www.abbaye-mont-saint-michel.fr/en/), where you can also check opening hours and the current ticket price. Our advice is to arrive early or late: the single main street fills by mid-morning, while the ramparts at dusk feel like a different place.
 
 ## Tides and safety on the bay
 
