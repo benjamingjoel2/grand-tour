@@ -113,7 +113,7 @@ North of the Vézère, the [Grotte de Rouffignac](https://www.grottederouffignac
 
 ## The castles: Beynac and Castelnaud
 
-The stretch of the Dordogne between Beynac and Castelnaud is where the castles come thickest. For centuries this river was a frontier, and the fortresses face each other across the water like chess pieces left mid-game.
+The stretch of the Dordogne between Beynac and Castelnaud is where the castles come thickest. The fortresses face each other across the water like chess pieces left mid-game.
 
 **Beynac.** The village of Beynac-et-Cazenac tumbles down the slope beneath its [listed historic castle](https://en.sarlat-tourisme.com/discover-sarlat-and-the-perigord/the-most-beautiful-villages-of-france/), which crowns the cliff above the river. Walk up through the steep lanes rather than driving: the climb is the best part, with the roofs of lauze stone and the river opening up below you at every turn. Go early or late in summer, when the light is soft and the coaches have gone.
 
@@ -140,7 +140,7 @@ Our advice: bring a basket and plan a picnic rather than a restaurant lunch on m
 
 The castles look best from the water. The [Sarlat tourist office's water activities page](https://en.sarlat-tourisme.com/choose-your-activities/leisure-and-outdoor-activities/around-the-water/) lists hire bases along the edge of the Dordogne offering canoes, kayaks, paddleboards and trips on gabarres, the flat-bottomed wooden boats that once carried cargo down the river. Most people choose a half-day or full-day paddle, and there are little beaches along the banks where you can stop, swim and eat.
 
-The classic way to do it is a one-way paddle: the hire base drives you upstream and you float back down past the villages and castles. It is gentle, the current does a good share of the work, and it is perfectly manageable for families. Wear the buoyancy aid you are given, take sun protection and water, and ask the hire base about current river conditions before you set off. If paddling is not your thing, a gabarre trip gives you the same views from a comfortable seat.
+The appeal is simple: you drift past the villages and castles at walking pace, with the cliffs rising straight out of the water. Ask your hire base how the outing works and where it starts and finishes. It is gentle, the current does a good share of the work, and it is perfectly manageable for families. Wear the buoyancy aid you are given, take sun protection and water, and ask the hire base about current river conditions before you set off. If paddling is not your thing, a gabarre trip gives you the same views from a comfortable seat.
 
 ## Where to stay
 
