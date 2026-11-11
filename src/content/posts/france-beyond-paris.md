@@ -4,16 +4,17 @@ description: "New to France outside the capital? A warm, practical introduction 
 pubDate: 2026-11-11
 updatedDate: 2026-11-11
 author: grand-tour-editors
+startHere: true
 categories: [travel-tips, destinations]
 destinations: [provence, loire-valley, normandy-brittany, burgundy, bordeaux-dordogne, alps, riviera, corsica]
 hero:
   image: ../../assets/photos/france-beyond-paris.jpg
-  alt: "Honey-coloured stone houses with brown tiled roofs and a round tower with a conical slate roof, built against a towering limestone cliff with a long wooden staircase climbing to ruined fortifications in the rock above"
-  caption: "Château de la Tarde in La Roque-Gageac, Dordogne"
-  credit: "Krzysztof Golik"
-  licence: "CC BY-SA 4.0"
-  licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
-  sourceUrl: "https://commons.wikimedia.org/wiki/File:Castle_Tarde_in_La_Roque-Gageac.jpg"
+  alt: "A turreted stone castle lit up at dusk on a small wooded promontory, reflected in the still water of a lake between green hills"
+  caption: "Château de Val, Cantal, in the Auvergne"
+  credit: "Tournasol7"
+  licence: "CC BY 4.0"
+  licenceUrl: "https://creativecommons.org/licenses/by/4.0/"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Val_Castle_(15).jpg"
 plan:
   heading: "Plan your first road trip beyond Paris"
   operator: "Rond-Point"
@@ -170,7 +171,7 @@ The right base matters more than the right hotel. Our general advice:
 - **Check entry rules.** If you are travelling from the UK, the FCDO's [entry requirements for France](https://www.gov.uk/foreign-travel-advice/france/entry-requirements) explain that your passport must have been issued less than 10 years before the date you arrive and must expire at least 3 months after the date you plan to leave the Schengen area. Visa-free visits are limited to 90 days in any 180-day period, and you may need to register your fingerprints and photo under the EU's Entry/Exit System. Other nationalities should check their own government's advice.
 - **Book key trains early.** SNCF Connect says that [under normal circumstances you can buy train tickets 4 months in advance](https://www.sncf-connect.com/en-en/help/ticket-sales-opening), although opening dates vary by type of train and around holiday periods.
 - **Check opening seasons** for any château, cave or museum you have your heart set on, on its official website, before you plan your route around it.
-- **Plan around market days.** Most towns have a weekly market; local tourist office websites list the days.
+- **Plan around market days.** Many towns and villages hold a weekly market; local tourist office websites list the days.
 - **Learn a few words of French.** A cheerful "bonjour" on entering a shop or café goes a very long way.
 - **Leave space.** Our best advice of all: build in a free day per week for the unplanned.
 

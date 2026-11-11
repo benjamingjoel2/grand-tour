@@ -4,6 +4,7 @@ description: "A two-week rail loop from Paris through the Loire, Bordeaux, Prove
 pubDate: 2026-11-11
 updatedDate: 2026-11-11
 author: grand-tour-editors
+startHere: true
 categories: [itineraries, travel-tips]
 destinations: [paris, loire-valley, bordeaux-dordogne, provence, riviera, alps]
 hero:

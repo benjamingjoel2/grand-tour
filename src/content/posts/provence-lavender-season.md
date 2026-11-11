@@ -4,6 +4,7 @@ description: "How to see Provence's lavender at its best: the Valensole plateau,
 pubDate: 2026-11-11
 updatedDate: 2026-11-11
 author: grand-tour-editors
+featured: true
 categories: [destinations, where-to-stay]
 destinations: [provence]
 hero:
