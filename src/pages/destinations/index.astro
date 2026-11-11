@@ -1,0 +1,28 @@
+---
+import Listing from '../../components/Listing.astro';
+import { CATEGORIES, DESTINATIONS, DESTINATION_SLUGS } from '../../data/site';
+import { getPosts } from '../../lib/posts';
+const posts = (await getPosts()).filter((p) => p.data.categories.includes('destinations'));
+const all = await getPosts();
+const count = (d: string) => all.filter((p) => (p.data.destinations as string[]).includes(d)).length;
+---
+<Listing title={CATEGORIES.destinations.name} kicker="Theme" blurb={CATEGORIES.destinations.blurb} posts={posts} crumbs={[{ name: 'Destinations', href: '/destinations/' }]}>
+  <nav aria-labelledby="regions-h" class="regions">
+    <h2 id="regions-h">Regions</h2>
+    <ul>
+      {DESTINATION_SLUGS.map((d) => (
+        <li><a href={`/destinations/${d}/`}>{DESTINATIONS[d].name}</a> <span>{count(d)} {count(d) === 1 ? 'story' : 'stories'}</span></li>
+      ))}
+    </ul>
+  </nav>
+  <h2 class="all-h">Destination stories</h2>
+</Listing>
+<style>
+  .regions { margin-bottom: 2rem; }
+  .regions h2, .all-h { font-size: 1.35rem; }
+  .regions ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem 1.5rem; grid-template-columns: 1fr; }
+  @media (min-width: 40rem) { .regions ul { grid-template-columns: repeat(3, 1fr); } }
+  .regions li { border-bottom: 1px solid var(--line); padding: 0.55rem 0; display: flex; justify-content: space-between; gap: 1rem; }
+  .regions a { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; color: var(--navy); }
+  .regions span { color: var(--muted); font-size: 0.9rem; }
+</style>

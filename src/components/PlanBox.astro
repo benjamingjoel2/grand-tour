@@ -1,0 +1,33 @@
+---
+import { SITE } from '../data/site';
+import type { Post } from '../lib/posts';
+interface Props { plan: Post['data']['plan']; sponsored?: boolean }
+const { plan, sponsored = false } = Astro.props;
+const rel = sponsored ? 'sponsored noopener' : 'noopener';
+---
+<aside class="plan" aria-labelledby="plan-h">
+  <p class="kicker">{sponsored ? <span class="ad-label">Advertisement feature</span> : 'Plan this trip'}</p>
+  <h2 id="plan-h">{plan.heading}</h2>
+  {plan.operator && plan.url && (
+    <div class="op">
+      <h3>{plan.operator}</h3>
+      {plan.summary && <p>{plan.summary}</p>}
+      <p><a class="btn" href={plan.url} rel={rel}>Visit {plan.operator}</a></p>
+    </div>
+  )}
+  <div class="op">
+    <h3>{plan.operator ? 'Or compare local operators' : 'Find a local operator'}</h3>
+    <p>Browse verified local travel companies working in France in the Tourground directory, and ask them directly about dates, routes and what is included.</p>
+    <p><a class="btn ghost" href={SITE.directoryUrl}>Open the Tourground directory</a></p>
+  </div>
+  <p class="note">Grand Tour and {plan.operator ?? 'the Tourground directory'} are part of the Tourground network. No company paid to appear in this story. <a href="/disclosure/">Read our disclosure</a>.</p>
+</aside>
+<style>
+  .plan { background: var(--cream); border: 1px solid var(--line); border-top: 4px solid var(--wine); border-radius: var(--radius); padding: 1.25rem; margin: 2.5rem 0; }
+  h2 { font-size: 1.4rem; }
+  .op + .op { border-top: 1px solid var(--line); padding-top: 1rem; margin-top: 1rem; }
+  h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; }
+  .op p { margin-bottom: 0.75rem; }
+  .op p:last-child { margin-bottom: 0; }
+  .note { font-size: 0.85rem; color: var(--muted); margin: 1rem 0 0; }
+</style>

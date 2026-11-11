@@ -1,0 +1,21 @@
+---
+import Page from '../layouts/Page.astro';
+import { getPosts, postUrl } from '../lib/posts';
+const posts = await getPosts();
+---
+<Page title="Photo credits" kicker="About this site" description="Every photograph on Grand Tour, its author, licence and source on Wikimedia Commons." lede="We use real, freely licensed photographs from Wikimedia Commons, shown with their author and licence. We do not use AI-generated images, and we avoid photos of identifiable people.">
+  <table>
+    <thead><tr><th scope="col">Story</th><th scope="col">Photograph</th><th scope="col">Author</th><th scope="col">Licence</th></tr></thead>
+    <tbody>
+      {posts.map((p) => (
+        <tr>
+          <td><a href={postUrl(p)}>{p.data.title}</a></td>
+          <td><a href={p.data.hero.sourceUrl} rel="nofollow noopener">{p.data.hero.caption ?? decodeURIComponent(p.data.hero.sourceUrl.split('File:')[1] ?? 'Source').replace(/_/g, ' ')}</a></td>
+          <td>{p.data.hero.credit}</td>
+          <td>{p.data.hero.licenceUrl ? <a href={p.data.hero.licenceUrl} rel="license nofollow noopener">{p.data.hero.licence}</a> : p.data.hero.licence}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p>If you are the author of one of these photographs and believe it is credited incorrectly, please email us and we will fix it.</p>
+</Page>

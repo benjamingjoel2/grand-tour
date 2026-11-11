@@ -1,0 +1,17 @@
+---
+import Listing from '../../components/Listing.astro';
+import { CATEGORIES, CATEGORY_SLUGS, type CategorySlug } from '../../data/site';
+import { getPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return CATEGORY_SLUGS.filter((c) => c !== 'destinations').map((category) => ({
+    params: { category },
+    props: { posts: posts.filter((p) => p.data.categories.includes(category)) },
+  }));
+}
+const category = Astro.params.category as CategorySlug;
+const { posts } = Astro.props;
+const c = CATEGORIES[category];
+---
+<Listing title={c.name} kicker="Theme" blurb={c.blurb} posts={posts} crumbs={[{ name: c.name, href: `/${category}/` }]} />

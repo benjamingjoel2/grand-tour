@@ -1,0 +1,121 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PlanBox from '../../components/PlanBox.astro';
+import Sources from '../../components/Sources.astro';
+import PostCard from '../../components/PostCard.astro';
+import { AUTHORS, CATEGORIES, DESTINATIONS, SITE } from '../../data/site';
+import { formatDate, getPosts, isoDate, readingTime, related, wordCount, type Post } from '../../lib/posts';
+import { ORG_ID, SITE_ID } from '../../lib/jsonld';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, all: posts } }));
+}
+interface Props { post: Post; all: Post[] }
+const { post, all } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const author = AUTHORS[d.author] ?? AUTHORS['grand-tour-editors'];
+const cat = d.categories[0];
+const url = new URL(Astro.url.pathname, SITE.url).href;
+const rel = related(post, all);
+const ldImage = await getImage({ src: d.hero.image, width: 1600, format: 'jpg', quality: 78 });
+
+const graph = [
+  {
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: d.title,
+    description: d.description,
+    url,
+    mainEntityOfPage: url,
+    image: { '@type': 'ImageObject', url: new URL(ldImage.src, SITE.url).href, caption: d.hero.caption ?? d.hero.alt, creditText: d.hero.credit, license: d.hero.licenceUrl ?? d.hero.sourceUrl },
+    datePublished: isoDate(d.pubDate),
+    dateModified: isoDate(d.updatedDate),
+    inLanguage: 'en-GB',
+    wordCount: wordCount(post),
+    articleSection: CATEGORIES[cat].name,
+    keywords: [...d.categories.map((c) => CATEGORIES[c].name), ...d.destinations.map((x) => DESTINATIONS[x].name), 'France'].join(', '),
+    author: { '@type': 'Organization', name: author.name, url: `${SITE.url}/authors/` },
+    publisher: { '@id': ORG_ID },
+    isPartOf: { '@id': SITE_ID },
+    citation: d.sources.map((s) => s.url),
+  },
+];
+const updatedLater = isoDate(d.updatedDate) !== isoDate(d.pubDate);
+---
+<Base
+  title={d.title}
+  description={d.description}
+  crumbs={[{ name: CATEGORIES[cat].name, href: `/${cat}/` }, { name: d.title, href: Astro.url.pathname }]}
+  graph={graph}
+  ogImage={d.hero.image}
+  ogImageAlt={d.hero.alt}
+  ogType="article"
+>
+  <article class="post">
+    <header class="wrap post-head">
+      <p class="kicker">
+        {d.sponsored && <span class="ad-label">Advertisement feature</span>}
+        <a href={`/${cat}/`}>{CATEGORIES[cat].name}</a>
+        {d.destinations.slice(0, 3).map((x) => <> · <a href={`/destinations/${x}/`}>{DESTINATIONS[x].name}</a></>)}
+      </p>
+      <h1>{d.title}</h1>
+      <p class="lede">{d.description}</p>
+      <p class="meta">
+        {'By '}<a href="/authors/">{author.name}</a>{' · Published '}
+        <time datetime={isoDate(d.pubDate)}>{formatDate(d.pubDate)}</time>
+        {updatedLater && <>{' · Updated '}<time datetime={isoDate(d.updatedDate)}>{formatDate(d.updatedDate)}</time></>}
+        {` · ${readingTime(post)} min read`}
+      </p>
+    </header>
+    <figure class="hero">
+      <Picture
+        src={d.hero.image}
+        alt={d.hero.alt}
+        formats={['avif', 'webp']}
+        widths={[480, 800, 1200, 1600]}
+        sizes="(min-width: 76rem) 72rem, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        quality={72}
+      />
+      <figcaption class="wrap credit">
+        {d.hero.caption && <span>{d.hero.caption}. </span>}
+        {'Photo: '}<a href={d.hero.sourceUrl} rel="nofollow noopener">{d.hero.credit}</a>{', '}
+        {d.hero.licenceUrl ? <a href={d.hero.licenceUrl} rel="license nofollow noopener">{d.hero.licence}</a> : d.hero.licence}{', via Wikimedia Commons'}
+      </figcaption>
+    </figure>
+    <div class="wrap">
+      <div class="body">
+        <p class="checked">Practical details in this story were checked against official sources on <time datetime={isoDate(d.updatedDate)}>{formatDate(d.updatedDate)}</time>. They are linked in the text and listed under Sources. Rules, timetables and opening dates change, so check before you book.</p>
+        <div class="prose story">
+          <Content />
+        </div>
+        <PlanBox plan={d.plan} sponsored={d.sponsored} />
+        <Sources sources={d.sources} updated={d.updatedDate} />
+      </div>
+    </div>
+  </article>
+  {rel.length > 0 && (
+    <section class="wrap section" aria-labelledby="related-h">
+      <div class="section-head"><h2 id="related-h">Related stories</h2><a href="/posts/">All stories</a></div>
+      <ul class="cards three">{rel.map((p) => <PostCard post={p} />)}</ul>
+    </section>
+  )}
+</Base>
+<style>
+  .post-head { padding-top: 1.25rem; max-width: calc(var(--measure) + 2 * var(--gutter)); margin-left: auto; margin-right: auto; }
+  .post-head h1 { margin-bottom: 0.5rem; }
+  .post-head .lede { color: var(--muted); }
+  .hero { margin: 1.5rem auto 0; max-width: var(--max); }
+  .hero :global(img) { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; max-height: 78vh; }
+  @media (min-width: 76rem) { .hero :global(img) { border-radius: var(--radius); } .hero figcaption { padding: 0; } }
+  .body { max-width: var(--measure); margin: 0 auto; padding-top: 1.5rem; }
+  .checked { font-size: 0.88rem; color: var(--muted); border-left: 3px solid var(--line); padding-left: 0.85rem; }
+  .story { font-size: 1.08rem; }
+  .story :global(h2) { margin-top: 2.25rem; }
+  .story :global(a) { overflow-wrap: anywhere; }
+</style>

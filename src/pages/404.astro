@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page not found" description="This page does not exist or has moved." noindex crumbs={[{ name: 'Page not found', href: '/404/' }]} showCrumbs={false}>
+  <div class="wrap page prose">
+    <h1>Page not found</h1>
+    <p>This page does not exist or has moved. Try <a href="/posts/">all stories</a>, the <a href="/destinations/">destinations</a>, or the <a href="/">home page</a>.</p>
+  </div>
+</Base>

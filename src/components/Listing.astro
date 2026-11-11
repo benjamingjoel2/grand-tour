@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from './PostCard.astro';
+import Newsletter from './Newsletter.astro';
+import type { Crumb } from '../lib/jsonld';
+import { SITE, SITE_ID } from '../lib/listing-consts';
+import { postUrl, type Post } from '../lib/posts';
+interface Props { title: string; kicker?: string; blurb: string; posts: Post[]; crumbs: Crumb[]; empty?: string }
+const { title, kicker, blurb, posts, crumbs, empty } = Astro.props;
+const url = new URL(Astro.url.pathname, SITE.url).href;
+const graph = [
+  {
+    '@type': 'CollectionPage',
+    '@id': `${url}#page`,
+    name: title,
+    description: blurb,
+    url,
+    isPartOf: { '@id': SITE_ID },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE.url}${postUrl(p)}`, name: p.data.title })),
+    },
+  },
+];
+---
+<Base title={title} description={blurb} crumbs={crumbs} graph={graph}>
+  <div class="wrap page">
+    <header>
+      {kicker && <p class="kicker">{kicker}</p>}
+      <h1>{title}</h1>
+      <p class="lede measure">{blurb}</p>
+    </header>
+    <slot />
+    {posts.length > 0 ? (
+      <ul class="cards three">{posts.map((p, i) => <PostCard post={p} headingLevel="h2" eager={i < 2} />)}</ul>
+    ) : (
+      <p class="box measure">{empty ?? 'Stories for this section are on the way.'} In the meantime, browse <a href="/posts/">all stories</a>.</p>
+    )}
+    <slot name="after" />
+  </div>
+  <Newsletter />
+</Base>

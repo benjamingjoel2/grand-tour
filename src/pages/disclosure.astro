@@ -1,0 +1,20 @@
+---
+import Page from '../layouts/Page.astro';
+---
+<Page title="Disclosure" kicker="About this site" description="Who publishes Grand Tour, how Tourground and Rond-Point are connected, and how any paid content would be labelled." citations={['https://tourground.com/', 'https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links']}>
+  <h2>Publisher</h2>
+  <p>Grand Tour is published by <a href="https://tourground.com">Tourground</a>. Tourground runs a directory of verified local travel companies and earns money from paid plans sold to travel companies.</p>
+  <h2>Operators we link to</h2>
+  <p>Each story ends with a “Plan this trip” box. It links to the Tourground directory and, where relevant, to <a href="https://rond-point.tourground.com/">Rond-Point</a>, a tailor-made road-trip brand for France. Rond-Point is part of the Tourground network, and some travel brands in that network are owned by Tourground’s founders. You should assume that Tourground may benefit if you book through an operator we link to.</p>
+  <h2>Editorial independence</h2>
+  <p>No company has paid to be mentioned in any story on Grand Tour. The places, routes and sights we write about are chosen because we think they are worth your time, and the practical facts come from official sources listed in each story.</p>
+  <h2>Advertising</h2>
+  <p>We do not currently publish paid content. If we ever do, it will be labelled “Advertisement feature” at the top of the page and on every card that links to it, kept visually separate from editorial content, and links in it will be marked <code>rel="sponsored"</code>.</p>
+  <h2>Links</h2>
+  <p>Links in a story’s list of sources are citations and are marked <code>nofollow</code>. We do not use affiliate links.</p>
+  <h2>Sources</h2>
+  <ul>
+    <li><a href="https://tourground.com/" rel="nofollow noopener">Tourground</a> (tourground.com)</li>
+    <li><a href="https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links" rel="nofollow noopener">Google Search Central: Qualify your outbound links</a></li>
+  </ul>
+</Page>

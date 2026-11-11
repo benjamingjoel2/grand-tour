@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import { CATEGORIES } from '../data/site';
+import { formatDate, postUrl, readingTime, type Post } from '../lib/posts';
+interface Props { post: Post; headingLevel?: 'h2' | 'h3'; eager?: boolean }
+const { post, headingLevel = 'h3', eager = false } = Astro.props;
+const H = headingLevel;
+const cat = post.data.categories[0];
+---
+<li class="card">
+  <Image
+    src={post.data.hero.image}
+    alt=""
+    widths={[400, 640, 900]}
+    sizes="(min-width: 64rem) 22rem, (min-width: 40rem) 45vw, 100vw"
+    loading={eager ? 'eager' : 'lazy'}
+    quality={70}
+  />
+  <p class="kicker">
+    {post.data.sponsored && <span class="ad-label">Advertisement feature</span>}
+    <a href={`/${cat}/`}>{CATEGORIES[cat].name}</a>
+  </p>
+  <H><a href={postUrl(post)}>{post.data.title}</a></H>
+  <p>{post.data.description}</p>
+  <p class="meta"><time datetime={post.data.pubDate.toISOString().slice(0, 10)}>{formatDate(post.data.pubDate)}</time> · {readingTime(post)} min read</p>
+</li>
+<style>
+  .card :global(h2) { font-size: 1.22rem; margin: 0; }
+</style>

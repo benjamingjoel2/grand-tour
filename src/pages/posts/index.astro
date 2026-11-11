@@ -1,0 +1,6 @@
+---
+import Listing from '../../components/Listing.astro';
+import { getPosts } from '../../lib/posts';
+const posts = await getPosts();
+---
+<Listing title="All stories" blurb="Every Grand Tour story, newest first: regions, food and wine, walking and cycling, itineraries and practical travel tips for France." posts={posts} crumbs={[{ name: 'All stories', href: '/posts/' }]} />

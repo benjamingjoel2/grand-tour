@@ -1,0 +1,37 @@
+---
+import Listing from '../../../components/Listing.astro';
+import { DESTINATIONS, DESTINATION_SLUGS, type DestinationSlug } from '../../../data/site';
+import { getPosts } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return DESTINATION_SLUGS.map((dest) => ({
+    params: { dest },
+    props: { posts: posts.filter((p) => (p.data.destinations as string[]).includes(dest)) },
+  }));
+}
+const dest = Astro.params.dest as DestinationSlug;
+const { posts } = Astro.props;
+const d = DESTINATIONS[dest];
+---
+<Listing
+  title={d.name}
+  kicker="Destination"
+  blurb={d.blurb}
+  posts={posts}
+  crumbs={[{ name: 'Destinations', href: '/destinations/' }, { name: d.name, href: `/destinations/${dest}/` }]}
+  empty={`We have not yet published a story dedicated to ${d.name}.`}
+>
+  <div slot="after">
+    {d.rondPoint && (
+      <aside class="box measure plan-dest" aria-labelledby="pd-h">
+        <h2 id="pd-h">Planning a trip to {d.name}?</h2>
+        <p>Rond-Point, part of the Tourground network, designs tailor-made road trips through France, including this region. You can also browse verified local operators in the <a href="https://tourground.com/">Tourground directory</a>.</p>
+        <p><a class="btn" href={d.rondPoint} rel="noopener">See Rond-Point’s {d.name} trips</a></p>
+      </aside>
+    )}
+  </div>
+</Listing>
+<style>
+  .plan-dest { margin-top: 2.5rem; border-top: 4px solid var(--wine); }
+</style>

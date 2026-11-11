@@ -1,0 +1,116 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { CATEGORIES, CATEGORY_SLUGS, DESTINATIONS, DESTINATION_SLUGS, SITE } from '../data/site';
+import { formatDate, getPosts, postUrl, readingTime } from '../lib/posts';
+import { SITE_ID } from '../lib/jsonld';
+
+const posts = await getPosts();
+const featured = posts.find((p) => p.data.featured) ?? posts[0];
+const startHere = posts.filter((p) => p.data.startHere);
+const latest = posts.filter((p) => p.id !== featured?.id).slice(0, 6);
+const graph = [
+  {
+    '@type': 'Blog',
+    '@id': `${SITE.url}/#blog`,
+    name: SITE.name,
+    url: `${SITE.url}/`,
+    description: SITE.description,
+    isPartOf: { '@id': SITE_ID },
+    blogPost: posts.map((p) => ({ '@type': 'BlogPosting', headline: p.data.title, url: `${SITE.url}${postUrl(p)}` })),
+  },
+];
+const fcat = featured?.data.categories[0];
+---
+<Base title={SITE.name} description={SITE.description} graph={graph}>
+  <h1 class="visually-hidden">Grand Tour: travel stories about France beyond the obvious</h1>
+  {featured && fcat && (
+    <section class="feature" aria-labelledby="feature-h">
+      <Picture
+        src={featured.data.hero.image}
+        alt={featured.data.hero.alt}
+        formats={['avif', 'webp']}
+        widths={[480, 800, 1200, 1600]}
+        sizes="(min-width: 76rem) 72rem, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        quality={72}
+      />
+      <div class="wrap feature-text">
+        <p class="kicker">Featured story · <a href={`/${fcat}/`}>{CATEGORIES[fcat].name}</a></p>
+        <h2 id="feature-h"><a href={postUrl(featured)}>{featured.data.title}</a></h2>
+        <p>{featured.data.description}</p>
+        <p class="meta">{formatDate(featured.data.pubDate)} · {readingTime(featured)} min read</p>
+        <p class="credit">Photo: <a href={featured.data.hero.sourceUrl} rel="nofollow noopener">{featured.data.hero.credit}</a> · {featured.data.hero.licence}</p>
+      </div>
+    </section>
+  )}
+
+  {startHere.length > 0 && (
+    <section class="starthere" aria-labelledby="start-h">
+      <div class="wrap">
+        <h2 id="start-h">Start here</h2>
+        <p>New to France, or new to travelling beyond Paris? These are the stories to read first.</p>
+        <ol>
+          {startHere.map((p) => (
+            <li><a href={postUrl(p)}>{p.data.title}</a><span>{p.data.description}</span></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  <section class="wrap section" aria-labelledby="latest-h">
+    <div class="section-head"><h2 id="latest-h">Latest stories</h2><a href="/posts/">All stories</a></div>
+    <ul class="cards three">{latest.map((p) => <PostCard post={p} />)}</ul>
+  </section>
+
+  <section class="wrap section" aria-labelledby="cats-h">
+    <div class="section-head"><h2 id="cats-h">Browse by theme</h2></div>
+    <ul class="catlist">
+      {CATEGORY_SLUGS.map((c) => (
+        <li>
+          <a href={`/${c}/`}>{CATEGORIES[c].name}</a>
+          <span>{CATEGORIES[c].blurb}</span>
+        </li>
+      ))}
+    </ul>
+    <h3 class="sub">Destinations</h3>
+    <ul class="destlist">
+      {DESTINATION_SLUGS.map((d) => <li><a href={`/destinations/${d}/`}>{DESTINATIONS[d].name}</a></li>)}
+    </ul>
+  </section>
+
+  <Newsletter />
+</Base>
+<style>
+  .feature { max-width: var(--max); margin: 0 auto; }
+  .feature :global(img) { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; max-height: 72vh; }
+  @media (min-width: 76rem) { .feature :global(img) { border-radius: 0 0 var(--radius) var(--radius); } }
+  .feature-text { padding-top: 1.25rem; max-width: 48rem; margin-left: 0; }
+  @media (min-width: 76rem) { .feature-text { padding-left: 0; } }
+  .feature h2 { font-size: clamp(1.7rem, 1.35rem + 1.5vw, 2.35rem); margin-bottom: 0.5rem; }
+  .feature h2 a { color: var(--navy); text-decoration: none; }
+  .feature h2 a:hover { text-decoration: underline; }
+  .feature p { margin-bottom: 0.5rem; }
+  .starthere { background: var(--navy); color: var(--cream); margin-top: 2.5rem; padding: 2rem 0; }
+  .starthere h2 { color: var(--cream); margin-bottom: 0.3rem; }
+  .starthere ol { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; gap: 1rem; counter-reset: s; }
+  @media (min-width: 48rem) { .starthere ol { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; } }
+  .starthere li { counter-increment: s; border-top: 1px solid var(--navy-soft); padding-top: 0.8rem; }
+  .starthere li::before { content: counter(s) '.'; font-family: var(--serif); color: #e8c9cd; margin-right: 0.4rem; }
+  .starthere a { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; font-weight: 600; }
+  .starthere span { display: block; color: #d8d2c6; font-size: 0.95rem; margin-top: 0.3rem; }
+  .catlist { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem 1.5rem; }
+  @media (min-width: 40rem) { .catlist { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64rem) { .catlist { grid-template-columns: repeat(3, 1fr); } }
+  .catlist li { border-left: 3px solid var(--wine); padding-left: 0.85rem; }
+  .catlist a { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; color: var(--navy); }
+  .catlist span { display: block; color: var(--muted); font-size: 0.95rem; margin-top: 0.2rem; }
+  .sub { margin-top: 2rem; font-size: 1.15rem; }
+  .destlist { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .destlist a { display: inline-block; padding: 0.55rem 0.9rem; border: 1px solid var(--line); border-radius: 999px; background: var(--cream); color: var(--navy); text-decoration: none; font-size: 0.95rem; min-height: 44px; }
+  .destlist a:hover { border-color: var(--navy); }
+</style>

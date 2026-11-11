@@ -1,0 +1,23 @@
+---
+import { SITE } from '../data/site';
+const subject = encodeURIComponent('Subscribe to Grand Tour');
+const body = encodeURIComponent('Please add me to the Grand Tour email list. (You can unsubscribe at any time by replying "Unsubscribe".)');
+---
+<section class="newsletter" aria-labelledby="newsletter-h">
+  <div class="wrap inner">
+    <div>
+      <h2 id="newsletter-h">New stories by email</h2>
+      <p>A short email when we publish a new story: no more than a couple a month, no tracking pixels, and you can leave at any time. To join, send us an email with “Subscribe” in the subject line.</p>
+      <p class="small">We use your email address only to send the newsletter. See our <a href="/privacy/">privacy policy</a>. Prefer a feed reader? Use our <a href="/rss.xml">RSS feed</a>.</p>
+    </div>
+    <p class="cta"><a class="btn wine" href={`mailto:${SITE.email}?subject=${subject}&body=${body}`}>Subscribe by email</a></p>
+  </div>
+</section>
+<style>
+  .newsletter { background: var(--cream); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 3rem; padding: 2rem 0; }
+  .inner { display: grid; gap: 1rem; align-items: center; }
+  @media (min-width: 48rem) { .inner { grid-template-columns: 2fr 1fr; } .cta { text-align: right; } }
+  h2 { margin-bottom: 0.4rem; }
+  .small { font-size: 0.9rem; color: var(--muted); margin: 0; }
+  .cta { margin: 0; }
+</style>

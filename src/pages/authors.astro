@@ -1,0 +1,21 @@
+---
+import Page from '../layouts/Page.astro';
+import { AUTHORS } from '../data/site';
+---
+<Page title="Authors" kicker="About this site" description="Who writes Grand Tour, and how stories are researched, checked and updated." lede="Grand Tour stories are written and checked by a small editorial desk at Tourground.">
+  {Object.entries(AUTHORS).map(([, a]) => (
+    <section>
+      <h2>{a.name}</h2>
+      <p class="meta">{a.role}</p>
+      <p>{a.bio}</p>
+    </section>
+  ))}
+  <h2>How a story is made</h2>
+  <ol>
+    <li>We choose a subject a first-time or returning visitor to France would genuinely want help with.</li>
+    <li>We research it from official sources: tourism boards, monument and park websites, transport operators and French government guidance.</li>
+    <li>We write it, linking every practical fact to its source, and list the sources at the end.</li>
+    <li>We re-check stories and update the “last updated” date when practical details change.</li>
+  </ol>
+  <p>We do not attribute stories to people who did not write them, and we do not invent personal anecdotes. When named contributors write for Grand Tour, they will be listed here with their own biographies.</p>
+</Page>

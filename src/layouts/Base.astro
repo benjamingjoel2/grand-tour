@@ -1,0 +1,151 @@
+---
+import '@fontsource-variable/inter/wght.css';
+import '@fontsource-variable/source-serif-4/wght.css';
+import '../styles/global.css';
+import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import serifUrl from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
+import { SITE, NAV } from '../data/site';
+import { baseGraph, breadcrumbList, type Crumb } from '../lib/jsonld';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getImage } from 'astro:assets';
+import { getPosts } from '../lib/posts';
+
+interface Props {
+  title: string;
+  description: string;
+  crumbs?: Crumb[];
+  graph?: Record<string, unknown>[];
+  ogImage?: ImageMetadata;
+  ogImageAlt?: string;
+  ogType?: 'website' | 'article';
+  showCrumbs?: boolean;
+  preloadImage?: { srcset: string; sizes: string; type: string };
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  crumbs = [],
+  graph = [],
+  ogImage,
+  ogImageAlt,
+  ogType = 'website',
+  showCrumbs = true,
+  preloadImage,
+  noindex = false,
+} = Astro.props;
+
+const path = Astro.url.pathname;
+const canonical = new URL(path, SITE.url).href;
+const fullTitle = path === '/' ? `${SITE.name}: ${SITE.tagline}` : `${title} | ${SITE.name}`;
+const allCrumbs: Crumb[] = [{ name: 'Home', href: '/' }, ...crumbs];
+
+let ogSrc = ogImage;
+let ogAlt = ogImageAlt;
+if (!ogSrc) {
+  const posts = await getPosts();
+  const f = posts.find((p) => p.data.featured) ?? posts[0];
+  if (f) {
+    ogSrc = f.data.hero.image;
+    ogAlt = f.data.hero.alt;
+  }
+}
+const og = ogSrc ? await getImage({ src: ogSrc, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 78 }) : null;
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@graph': [...baseGraph(), breadcrumbList(allCrumbs), ...graph],
+};
+const section = NAV.find((n) => path.startsWith(n.href))?.href;
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interUrl} as="font" type="font/woff2" crossorigin />
+    {preloadImage && (
+      <link rel="preload" as="image" type={preloadImage.type} imagesrcset={preloadImage.srcset} imagesizes={preloadImage.sizes} fetchpriority="high" />
+    )}
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={path === '/' ? fullTitle : title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={SITE.locale} />
+    {og && <meta property="og:image" content={new URL(og.src, SITE.url).href} />}
+    {og && <meta property="og:image:width" content="1200" />}
+    {og && <meta property="og:image:height" content="630" />}
+    {og && ogAlt && <meta property="og:image:alt" content={ogAlt} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#1B2A4A" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} RSS`} href="/rss.xml" />
+    <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    <script is:inline>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+    <script is:inline defer src="/_vercel/insights/script.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a class="brand" href="/" aria-label="Grand Tour home">Grand Tour<small>France beyond the obvious</small></a>
+        <a class="header-about" href="/about/">About</a>
+      </div>
+      <nav class="site-nav" aria-label="Sections">
+        <div class="wrap">
+          <ul>
+            {NAV.map((n) => (
+              <li><a href={n.href} aria-current={section === n.href ? 'page' : undefined}>{n.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+    </header>
+    {showCrumbs && path !== '/' && <Breadcrumbs crumbs={allCrumbs} />}
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div>
+            <h2>Grand Tour</h2>
+            <p>Story-led, practical travel writing about France beyond the obvious. Every practical fact links its official source, and every story shows when it was last updated.</p>
+            <p><a href="/rss.xml">RSS feed</a> · <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+          </div>
+          <div>
+            <h2>Read</h2>
+            <ul>
+              <li><a href="/posts/">All stories</a></li>
+              {NAV.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <h2>About</h2>
+            <ul>
+              <li><a href="/about/">About Grand Tour</a></li>
+              <li><a href="/authors/">Authors</a></li>
+              <li><a href="/disclosure/">Disclosure</a></li>
+              <li><a href="/photo-credits/">Photo credits</a></li>
+              <li><a href="/privacy/">Privacy</a></li>
+              <li><a href="/cookies/">Cookies</a></li>
+              <li><a href="/terms/">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="published-by">
+          <p style="margin:0">Published by <a href={SITE.publisher.url}>Tourground</a>.</p>
+          <p style="margin:0">Grand Tour · grandtour.tourground.com</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

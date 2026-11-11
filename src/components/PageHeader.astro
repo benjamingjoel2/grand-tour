@@ -1,0 +1,12 @@
+---
+import { formatDate } from '../lib/posts';
+import { SITE } from '../data/site';
+interface Props { title: string; kicker?: string; lede?: string; updated?: string }
+const { title, kicker, lede, updated = SITE.launchDate } = Astro.props;
+---
+<header>
+  {kicker && <p class="kicker">{kicker}</p>}
+  <h1>{title}</h1>
+  {lede && <p class="lede">{lede}</p>}
+  <p class="meta">Last updated <time datetime={updated}>{formatDate(updated)}</time> · Grand Tour editors, Tourground</p>
+</header>
